@@ -123,6 +123,15 @@ class Medic(Hero):
             if hero.health > 0 and self != hero:
                 hero.health += self.__heal_points
 
+class Witcher(Hero):
+    def __init__(self, name, health, damage, revival_chance):
+        super().__init__(name, health,damage, 'REVIVAL')
+        self.__revival_chance = 1
+
+    def apply_super_power(self, boss, heroes):
+        for hero in heroes:
+            if hero.health == 0 and self != hero:
+                hero.health += self.health
 
 round_number = 0
 
@@ -169,7 +178,8 @@ def start_game():
     berserk = Berserk(name='Guts', health=260, damage=5)
     doc = Medic(name='Aibolit', health=250, damage=5, heal_points=15)
     assistant = Medic(name='Kristin', health=300, damage=5, heal_points=5)
-    heroes_list = [warrior_1, doc, warrior_2, magic, berserk, assistant]
+    witcher = Witcher(name = 'August', health = 320, damage = 0, revival_chance=1)
+    heroes_list = [warrior_1, doc, warrior_2, magic, berserk, assistant, witcher]
 
     show_statistics(boss, heroes_list)
     while not is_game_over(boss, heroes_list):
